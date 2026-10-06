@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ecce Romani Vocabulary Trainer</title>
+<style>
+  :root {
+    --bg: #1b1f27;
+    --panel: #262b36;
+    --accent: #4f8cff;
+    --good: #34c759;
+    --bad: #ff453a;
+    --text: #f0f2f5;
+    --muted: #9aa3b2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    padding: 18px 24px;
+    text-align: center;
+    border-bottom: 1px solid #333a48;
+  }
+  header h1 { margin: 0 0 4px; font-size: 1.4rem; }
+  header p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+  #menu {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  section { margin-bottom: 28px; }
+  section h2 {
+    font-size: 1rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid #3a4152;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  #lesson-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .lesson-chip {
+    background: #1e232d;
+    border: 1px solid #3a4152;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .lesson-chip input { margin-right: 6px; }
+  .lesson-btns { display: flex; gap: 8px; }
+  .lesson-btns button {
+    background: transparent;
+    border: 1px solid #3a4152;
+    color: var(--muted);
+    padding: 5px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  .lesson-btns button:hover { color: var(--text); border-color: var(--accent); }
+
+  .mode-btn {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid #3a4152;
+    color: var(--text);
+    padding: 18px;
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    transition: border-color .15s, transform .1s;
+  }
+  .mode-btn:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-1px); }
+  .mode-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .mode-btn small { display: block; color: var(--muted); font-weight: normal; margin-top: 4px; }
+  .mode-count { color: var(--accent); font-size: 0.8rem; }
+
+  .csv-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+  .csv-row label.file-btn {
+    background: transparent;
+    border: 1px solid #3a4152;
+    color: var(--text);
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  .csv-row input[type=file] { display: none; }
+  .csv-row button {
+    background: transparent;
+    border: 1px solid #3a4152;
+    color: var(--muted);
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  #wordbank-source { color: var(--text); font-weight: 600; }
+  #wordbank-count { color: var(--muted); font-size: 0.85rem; }
+  .csv-status { font-size: 0.85rem; margin-top: 4px; }
+  .csv-status.ok { color: var(--good); }
+  .csv-status.error { color: var(--bad); }
+
+  #quiz {
+    display: none;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px 20px 60px;
+  }
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .hud a { color: var(--muted); cursor: pointer; text-decoration: underline; }
+  #quiz-title { font-size: 1.2rem; font-weight: 700; color: var(--text); }
+
+  #quiz-area {
+    background: var(--panel);
+    border: 1px solid #3a4152;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .prompt-word { font-size: 2rem; font-weight: 800; margin-bottom: 6px; }
+  .prompt-word.latin-sentence { font-size: 1.4rem; line-height: 1.5; }
+  .prompt-pos { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+
+  .text-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 14px;
+    font-size: 1.05rem;
+    border-radius: 8px;
+    border: 1px solid #3a4152;
+    background: #1e232d;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .qgroup { margin-bottom: 18px; text-align: left; }
+  .qlabel { color: var(--muted); font-size: 0.85rem; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt-btn {
+    background: #1e232d;
+    border: 1px solid #3a4152;
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--accent); }
+  .opt-btn.selected { border-color: var(--accent); background: rgba(79,140,255,0.15); }
+  .opt-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .opt-btn.correct, .opt-btn.wrong { opacity: 1; font-weight: 700; color: #fff; }
+  .opt-btn.correct { background: var(--good); border-color: var(--good); }
+  .opt-btn.wrong { background: var(--bad); border-color: var(--bad); text-decoration: line-through; }
+  .text-input.correct { border: 2px solid var(--good); }
+  .text-input.wrong { border: 2px solid var(--bad); }
+
+  button.action {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.action:hover:not(:disabled) { filter: brightness(1.1); }
+  button.action:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.action.secondary {
+    background: transparent;
+    border: 1px solid #3a4152;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+
+  #feedback { margin-top: 18px; text-align: center; }
+  #feedback .msg { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+  #feedback .msg.good { color: var(--good); }
+  #feedback .msg.bad { color: var(--bad); }
+  #feedback .msg { font-size: 1.4rem; }
+  .answer-box {
+    background: var(--panel);
+    border: 2px solid var(--good);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 0 auto 16px;
+    max-width: 480px;
+    color: var(--text);
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+  .answer-box.bad { border-color: var(--bad); }
+  .answer-label { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .answer-list { list-style: none; padding: 0; margin: 6px 0; font-size: 1.25rem; font-weight: 700; }
+  .answer-gloss { font-size: 1rem; }
+  .answer-note { color: #ffd60a; font-weight: 600; margin-bottom: 6px; }
+
+  .keyword-check { text-align: left; margin-top: 16px; background: #1e232d; border-radius: 8px; padding: 14px; }
+  .reference { margin-bottom: 10px; }
+  .kw-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .kw { padding: 3px 10px; border-radius: 12px; font-size: 0.85rem; }
+  .kw.found { background: rgba(52,199,89,0.2); color: var(--good); }
+  .kw.missing { background: rgba(255,69,58,0.15); color: var(--bad); }
+  .self-grade { display: flex; align-items: center; gap: 10px; }
+
+  #summary {
+    display: none;
+    max-width: 480px;
+    margin: 60px auto;
+    text-align: center;
+    padding: 0 20px;
+  }
+  #summary .score { font-size: 2.6rem; font-weight: 800; color: var(--accent); margin: 10px 0; }
+  .backlink { display: inline-block; margin-top: 16px; color: var(--muted); cursor: pointer; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ecce Romani Vocabulary Trainer</h1>
+  <p>Chapters 1&ndash;10 &middot; Latin&ndash;English, grammar ID, and silly sentences</p>
+</header>
+
+<div id="menu">
+  <section>
+    <h2>Word Bank</h2>
+    <div class="panel">
+      <div class="csv-row">
+        <span id="wordbank-source"></span>
+        <span id="wordbank-count"></span>
+      </div>
+      <div class="csv-row">
+        <label class="file-btn">Load CSV...<input type="file" id="csv-file-input" accept=".csv"></label>
+        <button id="csv-reset-btn">Reset to bundled default</button>
+      </div>
+      <div id="csv-load-status" class="csv-status"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lessons</h2>
+    <div class="panel">
+      <div class="lesson-btns" style="margin-bottom:10px;">
+        <button id="lessons-all">Select All</button>
+        <button id="lessons-none">Select None</button>
+      </div>
+      <div id="lesson-list"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mode</h2>
+    <button class="mode-btn" id="mode1-btn">
+      Latin &rarr; English
+      <small>See a word, type its English meaning. <span class="mode-count"></span></small>
+    </button>
+    <button class="mode-btn" id="mode2-btn">
+      Case, Number &amp; Gender
+      <small>See an inflected word, identify its grammar. <span class="mode-count"></span></small>
+    </button>
+    <button class="mode-btn" id="mode3-btn">
+      Silly Sentences
+      <small>Translate a randomly-generated silly Latin sentence. <span class="mode-count"></span></small>
+    </button>
+  </section>
+</div>
+
+<div id="quiz">
+  <div class="hud">
+    <div id="quiz-title"></div>
+    <div>Score: <span id="score">0</span>/<span id="answered">0</span> &nbsp;|&nbsp; <a id="quiz-menu-link">Back to menu</a></div>
+  </div>
+  <div id="quiz-area"></div>
+  <div id="feedback"></div>
+</div>
+
+<div id="summary">
+  <h2>Round Complete!</h2>
+  <div class="score" id="final-score">0 / 0</div>
+  <div id="final-msg"></div>
+  <button class="action" id="play-again-btn">Play Again</button>
+  <div><span class="backlink" id="summary-menu-link">Back to menu</span></div>
+</div>
+
+<script src="lib/papaparse.min.js"></script>
+<script src="lib/morphology.js"></script>
+<script src="lib/word_bank_data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

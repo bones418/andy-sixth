@@ -1,0 +1,226 @@
+lesson,lemma,pos,english,gender,declension,genitive,conj,principal_parts,splice_ok,transitive,notes
+1,puella,noun,girl,f,1,puellae,,,,,
+1,villa,noun,house; villa,f,1,villae,,,,,
+1,villa rustica,phrase,country house and farm,,,,,,,,"fixed phrase, not declined by the app"
+1,vicinus,adjective,neighboring; (as noun) neighbor,,,vicini,,,,,textbook shows fem. form 'vicina' agreeing with puella
+1,laetus,adjective,happy,,,laeti,,,,,textbook shows fem. form 'laeta'
+1,alter,adjective,other; second,,,alteri,,,,,irregular gen/dat sg: alterius/alteri; textbook shows fem. form 'altera'
+1,qui,pronoun,who; which,f,,n/a,,,,,relative pronoun qui/quae/quod; textbook shows fem. form 'quae'
+1,habito,verb,live; dwell,,,,1,habito;habitare;habitavi;habitatum,,,
+1,sedeo,verb,sit,,,,2,sedeo;sedere;sedi;sessum,,,
+1,lego,verb,read; gather; choose,,,,3,lego;legere;legi;lectum,,yes,
+1,scribo,verb,write,,,,3,scribo;scribere;scripsi;scriptum,,yes,
+1,etiam,adverb,also,,,,,,yes,,
+1,iam,adverb,now,,,,,,yes,,
+1,ubi,adverb,where,,,,,,,,
+1,et,conjunction,and,,,,,,,,
+1,quod,conjunction,because,,,,,,,,
+1,dum,conjunction,while,,,,,,,,
+1,aestate,phrase,in the summer,,,,,,yes,,fixed ablative idiom (aestas)
+1,sub arbore,phrase,under a tree,,,,,,yes,,
+1,nomine,phrase,by name; named,,,,,,,,fixed ablative idiom (nomen)
+1,ecce,interjection,look!,,,,,,,,
+2,amica,noun,friend (female),f,1,amicae,,,,,"textbook form shown: 'amicae' (plural, friends)"
+2,sum,verb,am; be,,,,irregular,,,,textbook form shown: 'sunt' (they are)
+2,ambulo,verb,walk,,,,1,ambulo;ambulare;ambulavi;ambulatum,,,
+2,curro,verb,run,,,,3,curro;currere;cucurri;cursum,,,
+2,defessus,adjective,tired,,,defessi,,,,,textbook shows fem. form 'defessa'
+2,strenuus,adjective,active; energetic,,,strenui,,,,,textbook shows fem. form 'strenua'
+2,is,pronoun,he; she; it (gen. his/her/its),m,,n/a,,,,,textbook form shown: 'eius' (genitive)
+2,quoque,adverb,also,,,,,,yes,,
+2,hodie,adverb,today,,,,,,yes,,
+2,tandem,adverb,at last,,,,,,yes,,
+2,lente,adverb,slowly,,,,,,yes,,
+2,saepe,adverb,often,,,,,,yes,,
+2,sed,conjunction,but,,,,,,,,
+2,in agris,phrase,in the fields,,,,,,yes,,
+2,ex agris,phrase,from/out of the fields,,,,,,yes,,
+2,ad villam rusticam,phrase,to/toward the country house and farm,,,,,,yes,,
+2,brevi tempore,phrase,in a short time; soon,,,,,,yes,,
+2,non iam,phrase,no longer,,,,,,yes,,
+2,quid faciunt?,phrase,what are they doing?,,,,,,,,
+3,puer,noun,boy,m,2,pueri,,,,,
+3,vir,noun,man,m,2,viri,,,,,
+3,servus,noun,slave,m,2,servi,,,,,single-source (appeared on one of two flashcard sources checked) - double check
+3,idem,pronoun,the same,f,,n/a,,,,,textbook shows fem. form 'eadem'
+3,multus,adjective,much; many,,,multi,,,,,
+3,solus,adjective,alone,,,soli,,,,,irregular gen/dat sg: solius/soli
+3,iratus,adjective,angry,,,irati,,,,,
+3,clamo,verb,shout,,,,1,clamo;clamare;clamavi;clamatum,,,
+3,rideo,verb,laugh; smile,,,,2,rideo;ridere;risi;risum,,,
+3,laboro,verb,work,,,,1,laboro;laborare;laboravi;laboratum,,,
+3,cado,verb,fall,,,,3,cado;cadere;cecidi;casum,,,
+3,gemo,verb,groan,,,,3,gemo;gemere;gemui;gemitum,,,
+3,subito,adverb,suddenly,,,,,,yes,,
+3,minime,adverb,no!,,,,,,,,single-source - double check
+3,in horto,phrase,in the garden,,,,,,yes,,
+3,in villis rusticis,phrase,in the country houses,,,,,,yes,,
+3,in piscinam,phrase,into the fishpond,,,,,,yes,,
+3,abite molesti,phrase,"go away, you pests!",,,,,,,,
+3,ita vero,phrase,yes!,,,,,,,,single-source - double check
+4,molestus,adjective,troublesome; annoying,,,molesti,,,,,
+4,magnus,adjective,big; great,,,magni,,,,,
+4,sollicitus,adjective,anxious; worried,,,solliciti,,,,,textbook shows fem. form 'sollicita'
+4,infirmus,adjective,weak; shaky,,,infirmi,,,,,
+4,vox,noun,voice,f,3,vocis,,,,,
+4,ramus,noun,branch,m,2,rami,,,,,
+4,fragor,noun,crash; noise,m,3,fragoris,,,,,
+4,tu,pronoun,you (singular),,,,,,,,"personal pronoun, no grammatical gender - excluded from Mode 2; textbook forms shown: 'tu' and 'te'"
+4,nihil,pronoun,nothing,,,,,,,,indeclinable - excluded from Mode 2
+4,vexo,verb,annoy,,,,1,vexo;vexare;vexavi;vexatum,,yes,
+4,amo,verb,like; love,,,,1,amo;amare;amavi;amatum,,yes,
+4,dormio,verb,sleep,,,,4,dormio;dormire;dormivi;dormitum,,,
+4,conspicio,verb,catch sight of,,,,3io,conspicio;conspicere;conspexi;conspectum,,yes,
+4,ascendo,verb,climb,,,,3,ascendo;ascendere;ascendi;ascensum,,yes,
+4,audio,verb,hear; listen (to),,,,4,audio;audire;audivi;auditum,,yes,
+4,video,verb,see,,,,2,video;videre;vidi;visum,,yes,
+4,terreo,verb,frighten,,,,2,terreo;terrere;terrui;territum,,yes,
+4,caveo,verb,beware; be careful,,,,2,caveo;cavere;cavi;cautum,,,textbook form shown: 'cave' (imperative)
+4,appropinquo,verb,approach,,,,1,appropinquo;appropinquare;appropinquavi;appropinquatum,,,
+4,semper,adverb,always,,,,,,yes,,
+4,tum,adverb,at that moment; then,,,,,,yes,,
+4,furtim,adverb,stealthily,,,,,,yes,,
+4,quo,adverb,where...to?,,,,,,,,
+4,igitur,conjunction,therefore,,,,,,,,
+4,magna voce,phrase,in a loud voice,,,,,,yes,,
+4,descende sexte,phrase,"come down, Sextus!",,,,,,,,
+4,qualis,phrase,what sort of...?,,,,,,,,"interrogative adjective, 3rd decl. pattern not implemented - excluded from Mode 2"
+5,dies,noun,day,m,5,diei,,,,,
+5,silva,noun,forest; woods,f,1,silvae,,,,,
+5,rivus,noun,stream,m,2,rivi,,,,,
+5,lupus,noun,wolf,m,2,lupi,,,,,
+5,clamor,noun,shout; shouting,m,3,clamoris,,,,,
+5,calidus,adjective,warm,,,calidi,,,,,
+5,frigidus,adjective,cool; cold,,,frigidi,,,,,
+5,ignavus,adjective,cowardly; lazy,,,ignavi,,,,,
+5,temerarius,adjective,rash; reckless,,,temerarii,,,,,
+5,perterritus,adjective,frightened; terrified,,,perterriti,,,,,
+5,salvus,adjective,safe,,,salvi,,,,,
+5,ego,pronoun,I; me,,,,,,,,"personal pronoun, no grammatical gender - excluded from Mode 2"
+5,erro,verb,wander,,,,1,erro;errare;erravi;erratum,,,
+5,respondeo,verb,reply; respond,,,,2,respondeo;respondere;respondi;responsum,,,
+5,peto,verb,seek; look for; attack,,,,3,peto;petere;petivi;petitum,,yes,
+5,arripio,verb,grab hold of; snatch,,,,3io,arripio;arripere;arripui;arreptum,,yes,
+5,repello,verb,drive off,,,,3,repello;repellere;reppuli;repulsum,,yes,
+5,advenio,verb,arrive; reach,,,,4,advenio;advenire;adveni;adventum,,,
+5,excipio,verb,welcome; receive,,,,3io,excipio;excipere;excepi;exceptum,,yes,
+5,timeo,verb,fear; be afraid,,,,2,timeo;timere;timui;-,,yes,
+5,volo,verb,wish; want,,,,irregular,,,,textbook form shown: 'vult'
+5,nolo,verb,not wish; refuse,,,,irregular,,,,
+5,paro,verb,prepare; get ready,,,,1,paro;parare;paravi;paratum,,yes,
+5,possum,verb,be able; can,,,,irregular,,,,textbook form shown: 'potest'
+5,exeo,verb,go out,,,,irregular,,,,
+5,si,conjunction,if,,,,,,,,
+5,neque,conjunction,neither...nor (neque...neque); and...not,,,,,,,,
+5,prope,preposition,near (+ acc.),,,,,,,,
+5,ex,preposition,out of; from (+ abl.),,,,,,,,appears as 'e' before consonants
+5,ibi,adverb,there,,,,,,yes,,
+5,adhuc,adverb,still,,,,,,yes,,
+5,ferte auxilium,phrase,bring help!,,,,,,,,
+6,pater,noun,father,m,3,patris,,,,,
+6,mater,noun,mother,f,3,matris,,,,,
+6,ancilla,noun,slave-woman; maidservant,f,1,ancillae,,,,,
+6,cibus,noun,food,m,2,cibi,,,,,
+6,aqua,noun,water,f,1,aquae,,,,,
+6,omnis,adjective,all; every,,,,,,,,3rd decl. 2-termination adjective pattern not implemented - excluded from Mode 2/3
+6,ipse,pronoun,himself; herself; itself (emphatic),f,,n/a,,,,,textbook shows fem. form 'ipsa'
+6,lucet,verb,it is light; it is day,,,,,,,,impersonal verb - excluded from Mode 3 (no normal subject)
+6,surgo,verb,get up; rise,,,,3,surgo;surgere;surrexi;surrectum,,,
+6,observo,verb,watch; observe,,,,1,observo;observare;observavi;observatum,,yes,
+6,purgo,verb,clean,,,,1,purgo;purgare;purgavi;purgatum,,yes,
+6,coquo,verb,cook,,,,3,coquo;coquere;coxi;coctum,,yes,
+6,porto,verb,carry,,,,1,porto;portare;portavi;portatum,,yes,
+6,reprehendo,verb,blame; scold,,,,3,reprehendo;reprehendere;reprehendi;reprehensum,,yes,
+6,doceo,verb,teach,,,,2,doceo;docere;docui;doctum,,yes,
+6,curo,verb,look after; take care of,,,,1,curo;curare;curavi;curatum,,yes,
+6,adiuvo,verb,help,,,,1,adiuvo;adiuvare;adiuvi;adiutum,,yes,
+6,per,preposition,through (+ acc.),,,,,,,,
+6,nondum,adverb,not yet,,,,,,yes,,
+6,tamen,adverb,however,,,,,,yes,,
+6,mox,adverb,soon; presently,,,,,,yes,,
+6,strenue,adverb,strenuously; hard,,,,,,yes,,
+6,nunc,adverb,now,,,,,,yes,,
+6,lanam trahunt,phrase,they spin wool,,,,,,,,
+6,omnia quae,phrase,everything that,,,,,,,,
+6,necesse est,phrase,it is necessary,,,,,,,,
+7,nuntius,noun,messenger,m,2,nuntii,,,,,
+7,princeps,noun,emperor; prince; chieftain,m,3,principis,,,,,
+7,occupatus,adjective,busy,,,occupati,,,,,
+7,meus,adjective,my,,,mei,,,,,
+7,specto,verb,watch; look at,,,,1,specto;spectare;spectavi;spectatum,,yes,
+7,venio,verb,come,,,,4,venio;venire;veni;ventum,,,
+7,saluto,verb,greet,,,,1,saluto;salutare;salutavi;salutatum,,yes,
+7,duco,verb,lead; take,,,,3,duco;ducere;duxi;ductum,,yes,
+7,trado,verb,hand over,,,,3,trado;tradere;tradidi;traditum,,yes,
+7,revoco,verb,recall; call back,,,,1,revoco;revocare;revocavi;revocatum,,yes,
+7,consulo,verb,consult,,,,3,consulo;consulere;consului;consultum,,yes,
+7,redeo,verb,return; go back,,,,irregular,,,,
+7,eo,verb,go,,,,irregular,,,,textbook form shown: 'ire' (infinitive)
+7,inquit,verb,(he/she) says; said,,,,,,,,"defective verb, limited forms only - excluded from Mode 3"
+7,salve,interjection,greetings! hello!,,,,,,,,
+7,eheu,interjection,alas! oh no!,,,,,,,,
+7,euge,interjection,hurray!,,,,,,,,
+7,ad urbem,phrase,to the city,,,,,,yes,,
+8,cubiculum,noun,room; bedroom,n,2,cubiculi,,,,,neuter - excluded from Mode 2/3 (2-gender design)
+8,tempus,noun,time,n,3,temporis,,,,,neuter - excluded from Mode 2/3 (2-gender design)
+8,vos,pronoun,you (plural),,,,,,,,"personal pronoun, no grammatical gender - excluded from Mode 2"
+8,nos,pronoun,we; us,,,,,,,,"personal pronoun, no grammatical gender - excluded from Mode 2"
+8,excito,verb,rouse; wake (someone) up,,,,1,excito;excitare;excitavi;excitatum,,yes,
+8,intro,verb,enter,,,,1,intro;intrare;intravi;intratum,,yes,
+8,induo,verb,put on,,,,3,induo;induere;indui;indutum,,yes,
+8,deinde,adverb,then; next,,,,,,yes,,
+8,celeriter,adverb,quickly,,,,,,yes,,
+8,iterum,adverb,again; a second time,,,,,,yes,,
+8,age,interjection,come on!,,,,,,,,
+9,ianitor,noun,doorkeeper,m,3,ianitoris,,,,,
+9,nullus,adjective,no; none,,,nulli,,,,,irregular gen/dat sg: nullius/nulli; textbook form shown: 'nulli'
+9,semisomnus,adjective,half-asleep,,,semisomni,,,,,textbook shows fem. form 'semisomna'
+9,miser,adjective,unhappy; miserable,,,miseri,,,,,textbook shows fem. form 'misera'
+9,tuus,adjective,your (singular),,,tui,,,,,
+9,nemo,pronoun,no one,,,,,,,,"irregular/suppletive, paradigm not implemented - excluded from Mode 2"
+9,taceo,verb,be quiet; be silent,,,,2,taceo;tacere;tacui;tacitum,,,textbook form shown: 'Tace!' (imperative)
+9,tempto,verb,try,,,,1,tempto;temptare;temptavi;temptatum,,yes,
+9,discedo,verb,go away; depart,,,,3,discedo;discedere;discessi;discessum,,,
+9,nescio,verb,know not; not know; don't know,,,,4,nescio;nescire;nescivi;nescitum,,yes,gloss ordered 'know not' so Mode 3's mechanical verb-conjugation lands on the right head word
+9,lacrimo,verb,weep; cry,,,,1,lacrimo;lacrimare;lacrimavi;lacrimatum,,,
+9,maneo,verb,remain; stay,,,,2,maneo;manere;mansi;mansum,,,
+9,mitto,verb,send,,,,3,mitto;mittere;misi;missum,,yes,
+9,promitto,verb,promise,,,,3,promitto;promittere;promisi;promissum,,yes,
+9,teneo,verb,hold,,,,2,teneo;tenere;tenui;tentum,,yes,
+9,abeo,verb,go away,,,,irregular,,,,
+9,hic,adverb,here,,,,,,yes,,
+9,tacite,adverb,silently,,,,,,yes,,
+9,simul,adverb,together; at the same time,,,,,,yes,,
+9,vale,interjection,goodbye! farewell!,,,,,,,,
+9,ad ianuam,phrase,at/to the door,,,,,,yes,,
+9,mecum,phrase,with me,,,,,,yes,,
+9,vos omnes,phrase,all of you,,,,,,,,
+9,secunda hora,phrase,at the second hour,,,,,,yes,,
+9,o me miseram,phrase,poor me!,,,,,,,,sources disagree on 'miserum' vs 'miseram'; 'miseram' (fem.) fits the speaker in context
+9,complexu,phrase,in an embrace,,,,,,yes,,
+9,alii alii,phrase,some...others,,,,,,,,
+10,cista,noun,trunk; chest,f,1,cistae,,,,,
+10,iter,noun,road; journey,n,3,itineris,,,,,neuter - excluded from Mode 2/3 (2-gender design)
+10,liberi,noun,children,m,,,,,,,plural-only (plurale tantum) - excluded from Mode 2 (no meaningful singular)
+10,via,noun,road; way,f,1,viae,,,,,
+10,baculum,noun,stick,n,2,baculi,,,,,neuter - excluded from Mode 2/3 (2-gender design)
+10,raeda,noun,carriage; wagon,f,1,raedae,,,,,
+10,raedarius,noun,carriage-driver; coachman,m,2,raedarii,,,,,
+10,equus,noun,horse,m,2,equi,,,,,
+10,alius,adjective,another; other,,,alii,,,,,"irregular: gen sg 'alius', dat sg 'alii', neut nom/acc sg 'aliud'"
+10,scelestus,adjective,wicked,,,scelesti,,,,,
+10,paratus,adjective,ready; prepared,,,parati,,,,,
+10,quis,pronoun,who? (interrogative),,,,,,,,interrogative paradigm not implemented - excluded from Mode 2
+10,gero,verb,wear; carry,,,,3,gero;gerere;gessi;gestum,,yes,
+10,iubeo,verb,order,,,,2,iubeo;iubere;iussi;iussum,,yes,
+10,pono,verb,put; place,,,,3,pono;ponere;posui;positum,,yes,
+10,sto,verb,stand,,,,1,sto;stare;steti;statum,,,
+10,habeo,verb,have; hold,,,,2,habeo;habere;habui;habitum,,yes,
+10,incito,verb,spur on; urge on,,,,1,incito;incitare;incitavi;incitatum,,yes,
+10,iacio,verb,throw; hurl,,,,3io,iacio;iacere;ieci;iactum,,yes,
+10,interea,adverb,meanwhile,,,,,,yes,,
+10,cras,adverb,tomorrow,,,,,,yes,,
+10,cur,adverb,why?,,,,,,,,"lower confidence - from search-snippet synthesis only, not independently fetched"
+10,quid,adverb,what?,,,,,,,,"lower confidence - from search-snippet synthesis only, not independently fetched"
+10,servus quidam,phrase,a certain slave,,,,,,,,
+10,eo ipso tempore,phrase,at that very moment,,,,,,yes,,
