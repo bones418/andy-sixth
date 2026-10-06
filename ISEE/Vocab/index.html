@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocab Flight</title>
+<style>
+  :root {
+    --sky-top: #6ec6ff;
+    --sky-bottom: #d9f1ff;
+    --ink: #10304f;
+    --muted: #4d6b88;
+    --card: #ffffff;
+    --line: #c9dcef;
+    --accent: #ff6b35;
+    --accent-dark: #e0521f;
+    --good: #1f9d55;
+    --ok: #e3a008;
+    --bad: #d64545;
+    --path: #ffffff;
+    --spot: #ffd166;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Trebuchet MS", "Avenir Next", system-ui, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)) fixed;
+    min-height: 100vh;
+  }
+  button { font: inherit; cursor: pointer; }
+  button:disabled { cursor: not-allowed; opacity: 0.45; }
+
+  .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    box-shadow: 0 4px 0 var(--accent-dark);
+    transition: transform .08s, box-shadow .08s;
+  }
+  .btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-dark); }
+  .btn.secondary { background: #fff; color: var(--ink); box-shadow: 0 4px 0 var(--line); border: 1px solid var(--line); }
+  .btn.small { padding: 7px 14px; font-size: 0.9rem; }
+
+  /* ---------- setup screen ---------- */
+  #setup { max-width: 640px; margin: 0 auto; padding: 32px 16px 60px; }
+  .title { text-align: center; margin-bottom: 24px; }
+  .title h1 { margin: 0; font-size: 2.6rem; letter-spacing: 0.02em; }
+  .title p { margin: 6px 0 0; color: var(--muted); font-size: 1.05rem; }
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 30px rgba(16, 48, 79, 0.15);
+  }
+  .range-row { display: flex; gap: 16px; align-items: end; flex-wrap: wrap; }
+  .range-row label { flex: 1; min-width: 160px; font-weight: 700; color: var(--muted); font-size: 0.9rem; }
+  .range-row select {
+    display: block; width: 100%; margin-top: 6px;
+    font: inherit; font-size: 1.1rem; padding: 10px; border-radius: 10px;
+    border: 2px solid var(--line); background: #f7fbff; color: var(--ink);
+  }
+  .range-summary { margin: 18px 0 8px; font-size: 1.1rem; }
+  .range-summary b { color: var(--accent-dark); }
+  details { margin-bottom: 18px; color: var(--muted); }
+  details summary { cursor: pointer; }
+  .word-preview { columns: 3 140px; font-size: 0.9rem; margin-top: 8px; color: var(--ink); }
+  .how { margin-top: 18px; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
+  .how b { color: var(--ink); }
+
+  /* ---------- game screen ---------- */
+  #game { display: none; max-width: 1400px; margin: 0 auto; padding: 12px 16px 40px; }
+  .hud {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .hud .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .pill { background: rgba(255,255,255,0.85); border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 0.95rem; }
+  .pill span { color: var(--accent-dark); }
+
+  .layout { display: flex; gap: 16px; align-items: flex-start; }
+  .board-wrap { flex: 1 1 auto; min-width: 0; }
+  #board { width: 100%; height: auto; display: block; border-radius: 18px; background: linear-gradient(180deg, #8fd3ff, #c7ecff); box-shadow: 0 10px 30px rgba(16,48,79,0.18); }
+  .panel { flex: 0 0 380px; }
+  @media (max-width: 900px) {
+    .layout { flex-direction: column; align-items: stretch; }
+    .board-wrap, .panel { flex: 1 1 auto; width: 100%; }
+  }
+
+  .word { font-size: 2.3rem; font-weight: 800; text-align: center; margin: 4px 0 2px; word-break: break-word; }
+  .pos { text-align: center; color: var(--muted); font-style: italic; margin-bottom: 16px; }
+  .answer-input {
+    width: 100%; font: inherit; font-size: 1.1rem; padding: 12px 14px;
+    border: 2px solid var(--line); border-radius: 12px; margin-bottom: 12px; color: var(--ink);
+  }
+  .answer-input:focus { outline: none; border-color: var(--accent); }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  .result { margin-top: 14px; border-radius: 14px; padding: 14px 16px; border: 3px solid var(--line); background: #f7fbff; }
+  .result.mostly { border-color: var(--good); background: #eafaf0; }
+  .result.somewhat { border-color: var(--ok); background: #fff8e1; }
+  .result.miss { border-color: var(--bad); background: #fdeeee; }
+  .result .verdict { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+  .result.mostly .verdict { color: var(--good); }
+  .result.somewhat .verdict { color: #a86f00; }
+  .result.miss .verdict { color: var(--bad); }
+  .result .def-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .result .def { font-size: 1.15rem; font-weight: 600; margin: 4px 0 10px; line-height: 1.4; }
+  .result .def mark { background: #b9f0cc; border-radius: 4px; padding: 0 2px; }
+  .result .yours { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+
+  /* ---------- dice ---------- */
+  .dice-tray { display: flex; gap: 22px; justify-content: center; min-height: 0; perspective: 600px; margin: 6px 0 14px; }
+  .dice-tray:empty { margin: 0; }
+  .die { width: 64px; height: 64px; position: relative; transform-style: preserve-3d; transition: transform 1.3s cubic-bezier(.2,.75,.25,1); }
+  .face {
+    position: absolute; inset: 0; background: #fff; border: 2px solid #d6dde6; border-radius: 12px;
+    display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); padding: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.08);
+  }
+  .pip { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); place-self: center; }
+  .f1 { transform: translateZ(32px); }
+  .f6 { transform: rotateY(180deg) translateZ(32px); }
+  .f2 { transform: rotateY(90deg) translateZ(32px); }
+  .f5 { transform: rotateY(-90deg) translateZ(32px); }
+  .f3 { transform: rotateX(90deg) translateZ(32px); }
+  .f4 { transform: rotateX(-90deg) translateZ(32px); }
+  .roll-total { text-align: center; font-size: 1.2rem; font-weight: 800; min-height: 1.5em; margin-bottom: 10px; }
+
+  /* ---------- board svg ---------- */
+  .spot { fill: var(--spot); stroke: #fff; stroke-width: 3; }
+  .spot.visited { fill: #ff9f68; }
+  .spot.milestone { fill: #5aa9e6; }
+  .spot.milestone.visited { fill: #ff6b35; }
+  .spot-num { font-size: 13px; font-weight: 800; fill: #fff; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+  .board-label { font-size: 20px; font-weight: 900; fill: var(--ink); text-anchor: middle; }
+
+  /* ---------- modal + summary ---------- */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(16, 48, 79, 0.45); display: none;
+    align-items: center; justify-content: center; padding: 16px; z-index: 10;
+  }
+  .modal-bg.open { display: flex; }
+  .modal { max-width: 460px; width: 100%; text-align: center; }
+  .modal h2 { margin-top: 0; font-size: 1.7rem; }
+  .modal p { font-size: 1.05rem; color: var(--muted); line-height: 1.5; }
+  .summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 16px 0; }
+  .summary-stats div { background: #f2f8ff; border-radius: 12px; padding: 10px; }
+  .summary-stats b { display: block; font-size: 1.6rem; color: var(--accent-dark); }
+  .review { text-align: left; max-height: 220px; overflow: auto; font-size: 0.95rem; margin-bottom: 16px; }
+  .review div { padding: 6px 0; border-bottom: 1px solid var(--line); }
+
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 20; }
+</style>
+</head>
+<body>
+
+<div id="setup">
+  <div class="title">
+    <h1>✈️ Vocab Flight</h1>
+    <p>Answer words, roll the dice, fly to the finish!</p>
+  </div>
+  <div class="card">
+    <div class="range-row">
+      <label>Start at words beginning with
+        <select id="from-select"></select>
+      </label>
+      <label>Go up to words beginning with
+        <select id="to-select"></select>
+      </label>
+    </div>
+    <div class="range-summary" id="range-summary"></div>
+    <details>
+      <summary>See the words in this range</summary>
+      <div class="word-preview" id="word-preview"></div>
+    </details>
+    <div class="actions"><button class="btn" id="start-btn">Take Off! 🛫</button></div>
+    <div class="how">
+      <b>How to play:</b> You'll see a word. Type what it means in your own words.
+      <b>Mostly right</b> = roll 2 dice. <b>Somewhat right</b> = roll 1 die.
+      Reach the finish to win!
+    </div>
+  </div>
+</div>
+
+<div id="game">
+  <div class="hud">
+    <div class="stats">
+      <div class="pill">Turn <span id="hud-turn">0</span></div>
+      <div class="pill">Correct <span id="hud-correct">0</span></div>
+      <div class="pill">Spot <span id="hud-spot">0</span> / <span id="hud-total">0</span></div>
+    </div>
+    <div>
+      <button class="btn small secondary" id="end-btn" style="display:none">End game</button>
+      <button class="btn small secondary" id="menu-btn">Menu</button>
+    </div>
+  </div>
+  <div class="layout">
+    <div class="board-wrap">
+      <svg id="board" viewBox="0 0 1000 640" aria-label="Game board"></svg>
+    </div>
+    <div class="panel">
+      <div class="card" id="question-card"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-bg">
+  <div class="card modal" id="modal"></div>
+</div>
+<canvas id="confetti"></canvas>
+
+<script src="words.js"></script>
+<script src="synonyms.js"></script>
+<script src="grader.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
