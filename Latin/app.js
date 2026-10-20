@@ -336,7 +336,9 @@ function renderLessonCheckboxes() {
     const id = `lesson-${n}`;
     const label = document.createElement("label");
     label.className = "lesson-chip";
-    label.innerHTML = `<input type="checkbox" id="${id}" value="${n}" checked> Lesson ${n}`;
+    // start with nothing ticked, so Andy picks the chapters he's studying
+    label.innerHTML = `<input type="checkbox" id="${id}" value="${n}">${n}`;
+    label.title = `Chapter ${n}`;
     container.appendChild(label);
   });
   container.querySelectorAll("input[type=checkbox]").forEach((cb) => {
@@ -360,9 +362,17 @@ function updateModeAvailability() {
 
   setModeButtonState("mode1-btn", m1 > 0, `${m1} word${m1 === 1 ? "" : "s"} available`);
   setModeButtonState("mode2-btn", m2 >= 1, `${m2} declinable word${m2 === 1 ? "" : "s"} available`);
+  const m4 = mode4Pool().length, m5 = mode5Pool().length, m6 = mode6Pool().length;
+  setModeButtonState("mode4-btn", m4 > 0, `${m4} word${m4 === 1 ? "" : "s"} available`);
+  setModeButtonState("mode5-btn", m5 > 0, `${m5} noun & verb forms available`);
+  setModeButtonState("mode6-btn", m6 > 0, `${m6} buildable forms available`);
   setModeButtonState("mode3-btn", m3ok, m3ok
     ? `${m3pools.nouns.length} nouns, ${m3pools.verbs.length} verbs available`
     : "Needs at least 1 noun + 1 verb in the selected lessons");
+
+  if (!selectedLessons.size) {
+    document.querySelectorAll(".mode-btn .mode-count").forEach((el) => { el.textContent = "Pick chapters above first"; });
+  }
 }
 
 function setModeButtonState(id, enabled, subtext) {
@@ -379,6 +389,7 @@ function renderWordBankStatus() {
 // ---- screen management -----------------------------------------------
 
 function showScreen(id) {
+  document.body.dataset.screen = id;
   ["menu", "quiz", "summary"].forEach((s) => {
     document.getElementById(s).style.display = s === id ? "block" : "none";
   });
@@ -408,6 +419,9 @@ function startMode(mode) {
     mode1: "Latin → English",
     mode2: "Case, Number & Gender",
     mode3: "Silly Sentences",
+    mode4: "English → Latin",
+    mode5: "English → Latin with endings",
+    mode6: "Build the Word",
   }[mode];
   nextQuestion();
 }
@@ -419,6 +433,9 @@ function nextQuestion() {
   if (currentMode === "mode1") renderMode1Question(area);
   else if (currentMode === "mode2") renderMode2Question(area);
   else if (currentMode === "mode3") renderMode3Question(area);
+  else if (currentMode === "mode4") renderMode4Question(area); // english_to_latin.js
+  else if (currentMode === "mode5") renderMode5Question(area);
+  else if (currentMode === "mode6") renderMode6Question(area);
   updateHud();
 }
 
@@ -727,6 +744,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("mode1-btn").addEventListener("click", () => startMode("mode1"));
   document.getElementById("mode2-btn").addEventListener("click", () => startMode("mode2"));
   document.getElementById("mode3-btn").addEventListener("click", () => startMode("mode3"));
+  ["mode4", "mode5", "mode6"].forEach((m) => document.getElementById(`${m}-btn`).addEventListener("click", () => startMode(m)));
 
   document.getElementById("csv-file-input").addEventListener("change", async (e) => {
     const file = e.target.files[0];

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ecce Romani Vocabulary Trainer</title>
 <style>
   :root {
@@ -67,6 +68,20 @@
     user-select: none;
   }
   .lesson-chip input { margin-right: 6px; }
+  /* chapters as a grid of big numbered toggles (checkbox hidden, chip lights up) */
+  #lesson-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  #lesson-list .lesson-chip {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0; min-height: 48px; border-radius: 12px; font-size: 1.15rem; font-weight: 700;
+    color: var(--muted);
+  }
+  #lesson-list .lesson-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  #lesson-list .lesson-chip:has(input:checked) { background: rgba(79,140,255,0.2); border-color: var(--accent); color: var(--text); }
+  .lesson-btns button { min-height: 40px; padding: 8px 14px; }
+
+  details.advanced { margin-top: 8px; color: var(--muted); }
+  details.advanced summary { cursor: pointer; padding: 10px 0; font-size: 0.9rem; }
+
   .lesson-btns { display: flex; gap: 8px; }
   .lesson-btns button {
     background: transparent;
@@ -233,6 +248,18 @@
   .kw.missing { background: rgba(255,69,58,0.15); color: var(--bad); }
   .self-grade { display: flex; align-items: center; gap: 10px; }
 
+  /* English -> Latin games */
+  .prompt-word.english { font-size: 1.6rem; }
+  .build-slot {
+    min-height: 60px; margin: 0 auto 16px; max-width: 400px; border: 2px dashed #3a4152; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; padding: 6px;
+  }
+  .build-slot .ph { font-size: 0.95rem; font-weight: 500; color: var(--muted); }
+  .build-slot .ending { color: #ffb340; }
+  .build-slot.good { border: 3px solid var(--good); background: rgba(52,199,89,0.12); }
+  .build-slot.bad { border: 3px solid var(--bad); background: rgba(255,69,58,0.12); }
+  .opt-btn.tile { font-size: 1.1rem; min-width: 72px; }
+
   #summary {
     display: none;
     max-width: 480px;
@@ -242,6 +269,29 @@
   }
   #summary .score { font-size: 2.6rem; font-weight: 800; color: var(--accent); margin: 10px 0; }
   .backlink { display: inline-block; margin-top: 16px; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    header h1 { font-size: 1.2rem; }
+    header p { font-size: 0.8rem; }
+    #menu { padding: 16px 16px 40px; }
+    section { margin-bottom: 20px; }
+    .mode-btn { padding: 16px; margin-bottom: 10px; }
+    #quiz { padding: 12px 16px 40px; }
+    #quiz-area { padding: 20px 16px; }
+    .hud { font-size: 0.85rem; gap: 8px; flex-wrap: wrap; }
+    .prompt-word { font-size: 1.8rem; }
+    .prompt-word.latin-sentence { font-size: 1.2rem; }
+    .text-input { font-size: 16px; } /* 16px+ stops iPhone zooming in on focus */
+    .opt-btn { flex: 1 1 calc(50% - 8px); min-height: 46px; }
+    button.action { min-height: 46px; }
+    button.action.secondary { margin-left: 0; margin-top: 8px; }
+    #feedback .action { width: 100%; }
+    .self-grade { flex-wrap: wrap; }
+    .self-grade span { flex-basis: 100%; }
+    .self-grade button.action { flex: 1; margin: 0; }
+    /* during a quiz the big title bar is just in the way on a phone */
+    body[data-screen="quiz"] header, body[data-screen="summary"] header { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -253,22 +303,7 @@
 
 <div id="menu">
   <section>
-    <h2>Word Bank</h2>
-    <div class="panel">
-      <div class="csv-row">
-        <span id="wordbank-source"></span>
-        <span id="wordbank-count"></span>
-      </div>
-      <div class="csv-row">
-        <label class="file-btn">Load CSV...<input type="file" id="csv-file-input" accept=".csv"></label>
-        <button id="csv-reset-btn">Reset to bundled default</button>
-      </div>
-      <div id="csv-load-status" class="csv-status"></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Lessons</h2>
+    <h2>Chapters</h2>
     <div class="panel">
       <div class="lesson-btns" style="margin-bottom:10px;">
         <button id="lessons-all">Select All</button>
@@ -288,11 +323,39 @@
       Case, Number &amp; Gender
       <small>See an inflected word, identify its grammar. <span class="mode-count"></span></small>
     </button>
+    <button class="mode-btn" id="mode4-btn">
+      English &rarr; Latin
+      <small>See a meaning, type the Latin dictionary form. <span class="mode-count"></span></small>
+    </button>
+    <button class="mode-btn" id="mode5-btn">
+      English &rarr; Latin with Endings
+      <small>“of the girls” &rarr; puellarum, “they walk” &rarr; ambulant. <span class="mode-count"></span></small>
+    </button>
+    <button class="mode-btn" id="mode6-btn">
+      Build the Word
+      <small>Tap a stem and an ending: puell- + -arum. <span class="mode-count"></span></small>
+    </button>
     <button class="mode-btn" id="mode3-btn">
       Silly Sentences
       <small>Translate a randomly-generated silly Latin sentence. <span class="mode-count"></span></small>
     </button>
   </section>
+
+  <details class="advanced">
+    <summary>Advanced: word bank</summary>
+    <div class="panel">
+      <div class="csv-row">
+        <span id="wordbank-source"></span>
+        <span id="wordbank-count"></span>
+      </div>
+      <div class="csv-row">
+        <label class="file-btn">Load CSV...<input type="file" id="csv-file-input" accept=".csv"></label>
+        <button id="csv-reset-btn">Reset to bundled default</button>
+      </div>
+      <div id="csv-load-status" class="csv-status"></div>
+    </div>
+  </details>
+
 </div>
 
 <div id="quiz">
@@ -316,5 +379,6 @@
 <script src="lib/morphology.js"></script>
 <script src="lib/word_bank_data.js"></script>
 <script src="app.js"></script>
+<script src="english_to_latin.js"></script>
 </body>
 </html>
