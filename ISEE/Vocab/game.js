@@ -308,7 +308,13 @@ function showQuestion() {
   `;
   const input = $("answer");
   input.focus();
-  input.addEventListener("keydown", (e) => { if (e.key === "Enter") submitAnswer(input.value); });
+  input.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    // Without this, the same Enter press "clicks" the Roll button that
+    // appears, rolling before the definition has been read.
+    e.preventDefault();
+    submitAnswer(input.value);
+  });
   $("check-btn").onclick = () => submitAnswer(input.value);
   $("skip-btn").onclick = () => submitAnswer("");
 }
