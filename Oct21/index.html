@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latin Quiz Practice</title>
+<style>
+  :root {
+    --bg: #f3f6fb;
+    --card: #ffffff;
+    --ink: #1c2840;
+    --muted: #5d6b82;
+    --line: #d5deeb;
+    --accent: #3866d6;
+    --subject: #2f6fe0;
+    --verb: #8b3fd1;
+    --object: #0f8f86;
+    --good: #1e9e57;
+    --bad: #d83f3a;
+    --miss: #e08a00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Trebuchet MS", "Avenir Next", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  button { font: inherit; cursor: pointer; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { margin: 0 0 4px; font-size: 2rem; text-align: center; }
+  .sub { text-align: center; color: var(--muted); margin: 0 0 24px; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; box-shadow: 0 6px 20px rgba(28,40,64,0.06); }
+  .mode {
+    display: block; width: 100%; text-align: left; background: var(--card); color: var(--ink);
+    border: 2px solid var(--line); border-radius: 16px; padding: 18px; margin-bottom: 12px;
+  }
+  .mode:hover { border-color: var(--accent); }
+  .mode-title { font-size: 1.2rem; font-weight: 800; }
+  .mode-desc { color: var(--muted); margin-top: 4px; }
+
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 12px;
+    padding: 12px 22px; font-size: 1.05rem; font-weight: 700;
+  }
+  .btn.secondary { background: #fff; color: var(--ink); border: 2px solid var(--line); }
+  .btn.big { display: block; width: 100%; margin-top: 16px; padding: 14px; font-size: 1.15rem; }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  .link { background: none; border: none; color: var(--muted); text-decoration: underline; padding: 4px 0; margin-bottom: 8px; }
+
+  .progress { color: var(--muted); font-weight: 700; margin-bottom: 8px; }
+  .instructions { color: var(--muted); margin-bottom: 14px; line-height: 1.4; }
+
+  /* tools */
+  .tools { display: flex; gap: 8px; margin-bottom: 18px; }
+  .tool {
+    flex: 1; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 10px 6px;
+    font-weight: 800; color: var(--ink); display: flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .tool small { font-weight: 500; color: var(--muted); font-size: 0.78rem; }
+  .tool-icon { font-size: 1.3rem; line-height: 1.2; }
+  .tool-subject.on { border-color: var(--subject); background: #eaf1fe; }
+  .tool-verb.on { border-color: var(--verb); background: #f4ecfc; }
+  .tool-object.on { border-color: var(--object); background: #e5f6f4; }
+  .tool-subject .tool-icon { color: var(--subject); }
+  .tool-verb .tool-icon { color: var(--verb); }
+  .tool-object .tool-icon { color: var(--object); }
+
+  /* sentence + marks */
+  .sentence { font-size: 1.45rem; line-height: 2.4; text-align: center; padding: 10px 4px; }
+  .sentence.plain { font-weight: 700; line-height: 1.5; }
+  .word {
+    background: none; border: 3px solid transparent; border-radius: 999px; padding: 0 8px;
+    color: var(--ink); font-size: inherit; line-height: 1.5; margin: 2px 0;
+    text-decoration-thickness: 3px; text-underline-offset: 6px;
+  }
+  .word:disabled { cursor: default; }
+  .word.m-subject { border-color: var(--subject); }
+  .word.m-verb { text-decoration: underline; text-decoration-color: var(--verb); text-decoration-thickness: 3px; }
+  .bracket { color: var(--object); font-weight: 900; font-size: 1.6rem; }
+
+  /* graded colors */
+  .word.subject-right { border-color: var(--good); }
+  .word.subject-wrong { border-color: var(--bad); }
+  .word.subject-missed { border-color: var(--miss); border-style: dashed; }
+  .word.verb-right { text-decoration-color: var(--good); }
+  .word.verb-wrong { text-decoration-color: var(--bad); }
+  .word.verb-missed { text-decoration-color: var(--miss); text-decoration-style: dashed; }
+  .bracket.br-right { color: var(--good); }
+  .bracket.br-wrong { color: var(--bad); }
+  .bracket.br-missed { color: var(--miss); }
+
+  /* feedback */
+  .verdict { font-size: 1.5rem; font-weight: 900; text-align: center; margin-top: 18px; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .legend { text-align: center; font-size: 0.85rem; margin: 4px 0 10px; }
+  .breakdown { border-top: 1px solid var(--line); padding-top: 10px; }
+  .line { margin: 8px 0; line-height: 1.5; }
+  .ok { color: var(--good); font-weight: 700; }
+  .bad { color: var(--bad); font-weight: 700; }
+  .miss { color: var(--miss); font-weight: 700; }
+  .translation-key { margin-top: 12px; color: var(--muted); }
+
+  textarea {
+    width: 100%; font: inherit; font-size: 1.1rem; padding: 12px; border-radius: 12px;
+    border: 2px solid var(--line); color: var(--ink); resize: vertical;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  .compare { margin-top: 16px; }
+  .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; margin-top: 10px; }
+  .mine, .key { font-size: 1.1rem; padding: 10px 12px; border-radius: 10px; margin-top: 4px; line-height: 1.45; }
+  .mine { background: #f2f4f8; }
+  .key { background: #e9f7ef; border-left: 4px solid var(--good); }
+
+  .done h2 { text-align: center; margin-top: 0; }
+  .grade { text-align: center; font-size: 3.4rem; font-weight: 900; color: var(--accent); }
+  .done p { text-align: center; }
+  .review > div { padding: 8px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
+  .small { color: var(--muted); font-weight: 400; }
+  .pair { padding: 12px 0; }
+
+  @media (max-width: 600px) {
+    main { padding: 16px 12px 40px; }
+    h1 { font-size: 1.6rem; }
+    .card { padding: 14px; }
+    .sentence { font-size: 1.25rem; line-height: 2.3; }
+    .word { padding: 0 5px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section id="menu">
+    <h1>Latin Quiz Practice</h1>
+    <p class="sub">Five sentences for the Oct 21 quiz</p>
+    <button class="mode" data-start="mark">
+      <div class="mode-title">✏️ Mark sentences</div>
+      <div class="mode-desc">Circle the subjects, underline the verbs, and bracket the direct objects. Graded.</div>
+    </button>
+    <button class="mode" data-start="translate">
+      <div class="mode-title">📖 Translate sentences</div>
+      <div class="mode-desc">Type your translation, then compare it with the answer key.</div>
+    </button>
+  </section>
+
+  <section id="play" style="display:none"></section>
+  <section id="done" style="display:none"></section>
+</main>
+<script src="sentences.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
