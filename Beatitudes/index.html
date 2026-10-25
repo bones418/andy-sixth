@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beatitudes Practice</title>
+<style>
+  :root {
+    --bg: #f7f4ee;
+    --card: #ffffff;
+    --ink: #24203a;
+    --muted: #6a6478;
+    --line: #e2dccf;
+    --accent: #b7862c;
+    --accent-dark: #8f671c;
+    --good: #1f9a55;
+    --good-bg: #dff5e8;
+    --bad: #d33d36;
+    --bad-bg: #fde6e4;
+    --miss: #c46a00;
+    --miss-bg: #fff2dc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  button, textarea { font-family: "Trebuchet MS", "Avenir Next", system-ui, sans-serif; }
+  button { cursor: pointer; }
+  main { max-width: 720px; margin: 0 auto; padding: 28px 16px 60px; }
+  h1 { text-align: center; font-size: 2.1rem; margin: 0 0 4px; }
+  .sub { text-align: center; color: var(--muted); margin: 0 0 24px; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; box-shadow: 0 6px 20px rgba(36,32,58,0.06); }
+  .btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 12px;
+    padding: 12px 22px; font-size: 1.05rem; font-weight: 700;
+  }
+  .btn.secondary { background: #fff; color: var(--ink); border: 2px solid var(--line); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .btn.wide { display: block; width: 100%; padding: 16px; font-size: 1.2rem; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .link { background: none; border: none; color: var(--muted); text-decoration: underline; padding: 4px 0; margin-bottom: 6px; font-size: 1rem; }
+
+  .study { margin-top: 16px; text-align: center; }
+  #study-list { text-align: left; line-height: 1.6; margin: 14px 0 0; padding-left: 22px; }
+  #study-list li { margin-bottom: 8px; }
+  .verse { color: var(--muted); font-size: 0.85em; }
+
+  .progress { color: var(--muted); font-weight: 700; margin-bottom: 8px; font-family: "Trebuchet MS", sans-serif; }
+  .prompt { font-size: 1.35rem; text-align: center; margin-bottom: 16px; }
+  .mic {
+    display: block; width: 100%; padding: 18px; font-size: 1.3rem; font-weight: 800;
+    border: none; border-radius: 16px; background: #2f5bd3; color: #fff;
+  }
+  .mic.on { background: var(--bad); animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 10px rgba(211,61,54,0.18); } }
+  .no-speech { background: var(--miss-bg); border-radius: 12px; padding: 12px; font-family: "Trebuchet MS", sans-serif; }
+  .status { min-height: 1.4em; color: var(--muted); margin: 10px 0 6px; text-align: center; font-family: "Trebuchet MS", sans-serif; }
+  textarea {
+    width: 100%; font-size: 1.15rem; line-height: 1.5; padding: 12px; border-radius: 12px;
+    border: 2px solid var(--line); color: var(--ink); resize: vertical; font-family: Georgia, serif;
+  }
+  textarea:focus { outline: none; border-color: var(--accent); }
+  textarea[readonly] { background: #f6f7fb; }
+
+  .verdict { font-size: 1.5rem; font-weight: 800; text-align: center; margin-top: 20px; font-family: "Trebuchet MS", sans-serif; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .legend { text-align: center; margin: 8px 0 12px; font-size: 0.85rem; }
+  .diff { font-size: 1.35rem; line-height: 2.1; text-align: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; }
+  .w { padding: 2px 5px; border-radius: 6px; white-space: nowrap; }
+  .w.same { background: var(--good-bg); color: #135f35; }
+  .w.missing { background: var(--miss-bg); color: var(--miss); border: 2px dashed var(--miss); font-weight: 700; }
+  .w.extra { background: var(--bad-bg); color: var(--bad); text-decoration: line-through; text-decoration-thickness: 2px; }
+  .label { margin-top: 14px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-family: "Trebuchet MS", sans-serif; font-weight: 700; }
+  .correct { font-size: 1.15rem; line-height: 1.5; margin-top: 4px; }
+
+  .done h2 { text-align: center; margin-top: 0; }
+  .grade { text-align: center; font-size: 3.4rem; font-weight: 900; color: var(--accent-dark); font-family: "Trebuchet MS", sans-serif; }
+  .done p { text-align: center; }
+  .review > div { padding: 10px 0; border-bottom: 1px solid var(--line); line-height: 1.5; }
+  .score { display: inline-block; min-width: 52px; font-weight: 800; font-family: "Trebuchet MS", sans-serif; }
+  .score.good { color: var(--good); }
+  .score.bad { color: var(--bad); }
+
+  @media (max-width: 600px) {
+    main { padding: 16px 12px 40px; }
+    h1 { font-size: 1.7rem; }
+    .card { padding: 16px; }
+    .prompt { font-size: 1.15rem; }
+    .diff { font-size: 1.15rem; }
+    textarea { font-size: 16px; } /* 16px+ stops iPhone zooming in */
+  }
+</style>
+</head>
+<body>
+<main>
+  <section id="menu">
+    <h1>The Beatitudes</h1>
+    <p class="sub">Matthew 5:3–10 · say each one in order</p>
+    <div class="card">
+      <p>You'll be asked for each of the 8 Beatitudes in order. Press <b>🎤 Start speaking</b>, say it, press <b>Stop</b>, fix any words the computer misheard, then <b>Submit</b>.</p>
+      <button class="btn wide" id="start-btn">Start</button>
+      <div class="study">
+        <button class="link" id="study-btn">Study them first (show / hide all 8)</button>
+        <ol id="study-list" style="display:none"></ol>
+      </div>
+    </div>
+  </section>
+  <section id="play" style="display:none"></section>
+  <section id="done" style="display:none"></section>
+</main>
+<script src="beatitudes.js"></script>
+<script src="diff.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
