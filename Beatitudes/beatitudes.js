@@ -7,5 +7,5 @@ window.BEATITUDES = [
   { verse: "Matthew 5:7", text: "Blessed are the merciful, for they shall obtain mercy." },
   { verse: "Matthew 5:8", text: "Blessed are the pure in heart, for they shall see God." },
   { verse: "Matthew 5:9", text: "Blessed are the peacemakers, for they shall be called sons of God." },
-  { verse: "Matthew 5:10", text: "Blessed are those who are persecuted for righteousness' sake, for theirs is the kingdom of heaven." },
+  { verse: "Matthew 5:10", text: "Blessed are those who are persecuted for the sake of righteousness, for theirs is the kingdom of heaven." },
 ];
